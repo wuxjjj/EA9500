@@ -74,13 +74,16 @@ jobs:
     - name: Install feeds
       run: cd openwrt && ./scripts/feeds install -a
 
+
+    - name: Install custom
+      run: cd openwrt && ln -s feeds/ea9500_openwrt/files files
+
     - name: Load custom configuration
       run: |
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         chmod +x $DIY_P2_SH
         cd openwrt
-        ln -s feeds/ea9500_openwrt/files files
         $GITHUB_WORKSPACE/$DIY_P2_SH
 
     - name: SSH connection to Actions
